@@ -1,0 +1,16 @@
+Package Name	Function
+shiny	Enables building web applications (Chang et al., 2023)
+shinythemes	Adds ready-made themes to Shiny apps (Chang, 2021)
+ggplot2	Plot creation (Wickham, 2016)
+gggenes	Extension to ggplot2 for visualizing gene structures (Wilkins, 2023)
+dplyr	Extends functions for data manipulation (Wickham et al., 2023a)
+tidyr	Extends functions for data transformation (Wickham et al., 2023b)
+patchwork	Allows combining multiple ggplot2 plots into one layout (Pedersen, 2024)
+tidyHeatmap	Creates heatmaps in tidyverse style (S. and A., 2020)
+BiocManager	Enables installation and management of Bioconductor packages (Morgan and Ramos, 2023)
+stringr	Simplifies and unifies working with text strings (Wickham, 2023)
+bslib	"Styling Shiny applications (Sievert et al., 2023; Yan, 2023)"
+ggvenn	ggplot2 extension for drawing Venn diagrams (Yan, 2023)
+ggupset	ggplot2 extension for drawing upset plots (Ahlmann-Eltze, 2024)
+pdftools	Allows reading and processing PDF files in R (Ooms, 2024)
+png	Handles PNG graphic files (Urbanek, 2022)

@@ -1,0 +1,49 @@
+gene	48hlogFC	58hlogFC	64hlogFC	48hFDR	58hFDR	64hFDR
+SCO0033	0.12	0.12	0.12	2,00E-01	2,00E-01	2,00E-01
+SCO0044	0.59	0.59	0.59	1,00E-02	1,00E-02	1,00E-02
+SCO0055	0.62	0.62	0.62	3,00E-02	3,00E-02	3,00E-02
+SCO0058	0.28	0.28	0.28	3,00E-09	3,00E-09	3,00E-09
+SCO0064	0.45	0.45	0.45	2,00E-04	2,00E-04	2,00E-04
+SCO0065	62.29	62.29	62.29	1,00E-09	1,00E-09	1,00E-09
+SCO0066	62.35	62.35	62.35	9,00E-10	9,00E-10	9,00E-10
+SCO0067	201.57	201.57	201.57	1,00E-13	1,00E-13	1,00E-13
+SCO0068	1.00	1.00	1.00	1,00E+00	1,00E+00	1,00E+00
+SCO0069	0.12	0.12	0.12	2,00E-02	2,00E-02	2,00E-02
+SCO0070	0.12	0.12	0.12	2,00E-02	2,00E-02	2,00E-02
+						
+						
+Package Name	Function					
+shiny	Enables building web applications (Chang et al., 2023)					
+shinythemes	Adds ready-made themes to Shiny apps (Chang, 2021)					
+ggplot2	Plot creation (Wickham, 2016)					
+gggenes	Extension to ggplot2 for visualizing gene structures (Wilkins, 2023)					
+dplyr	Extends functions for data manipulation (Wickham et al., 2023a)					
+tidyr	Extends functions for data transformation (Wickham et al., 2023b)					
+patchwork	Allows combining multiple ggplot2 plots into one layout (Pedersen, 2024)					
+tidyHeatmap	Creates heatmaps in tidyverse style (S. and A., 2020)					
+BiocManager	Enables installation and management of Bioconductor packages (Morgan and Ramos, 2023)					
+stringr	Simplifies and unifies working with text strings (Wickham, 2023)					
+bslib	"Styling Shiny applications (Sievert et al., 2023; Yan, 2023)"					
+ggvenn	ggplot2 extension for drawing Venn diagrams (Yan, 2023)					
+ggupset	ggplot2 extension for drawing upset plots (Ahlmann-Eltze, 2024)					
+pdftools	Allows reading and processing PDF files in R (Ooms, 2024)					
+png	Handles PNG graphic files (Urbanek, 2022)					
+						
+Role of Aor1 in antibiotic biosynthesis regulation [26].	aor1 deletion mutant vs WT	RNA-seq	S. coelicolor	Aor1_Antoraz_2017		
+Role and regulation of ArgR in liquid culture (Botas et al., 2018).	argR deletion mutant vs WT	RNA-seq	S. coelicolor	argr_Botas_2018		
+Role of BldD in morphological development and antibiotic production during vegetative growth (Den Hengst et al., 2010).	bldD deletion mutant vs WT	Microarray	S. coelicolor	BldD_denHengst_2010		
+Impact of BldC on life cycle progression (Bush et al., 2019).	bldC deletion mutant vs WT	RNA-seq	S. venezuelae	BldC_Bush_2018_sven		
+Role of DraR-K system in morphological and physiological differentiation (Yu et al., 2014).	draR-K deletion mutant vs wild type parent	Microarray	S. coelicolor	Drar-K_Yu_2014		
+Characterization of ECF42 sigma factors role and regulation (Liu et al., 2018).	Various deletion or overexpression mutants of ECF42	RNA-seq	S. venezuelae	ECF42_Liu_2018_sven		
+Role of GlnR in nitrogen starvation response regulation (Pullan et al., 2011).	glnR deletion mutant vs WT	Microarray	S. venezuelae	GlnR_Pullan_2011		
+Impact of OhkA on secondary metabolism and morphological differentiation [27].	ohkA deletion mutant vs WT	RNA-seq	S. coelicolor	OhkA_Lu_2011		
+Role of OsdR in oxidative stress response (Urem et al., 2016).	osdR deletion mutant vs WT	Microarray	S. coelicolor	OsdR_Urem_2016		
+Role of sigma R in protein quality control during disulfide stress (Kallifidas et al., 2010).	sigR deletion mutant vs WT	RNA-seq	S. coelicolor	sigR_Kallifidas_2010		
+Investigation of SoxR targets (Naseer et al., 2014).	soxR deletion mutant vs WT	RNA-seq	S. coelicolor	soxR_Naseer_2014		
+Identification of new genes involved in sporulation (Salerno et al., 2013).	whiA or whiH deletion mutants vs WT	Microarray	S. coelicolor	whiAH_Salerno_2013		
+Transcriptomic analysis of sporulating solid vs liquid cultures (Yague et al., 2013).	Solid vs liquid culture	Microarray	S. coelicolor	SolidLiquidDiff_Yague_2013		
+Detailed analysis of transcriptional and translational processes (Jeong et al., 2016).	Different life cycle stages	RNA-seq	S. coelicolor	growth_phases_Yeong_2016		
+Impact of ethanol shock on transcription and metabolism (Sekurova et al., 2022).	Cells under ethanol shock vs WT	RNA-seq	S. venezuelae	NRRL_Sekurova_2022_sven		
+Analysis of HrdB regulon during vegetative growth (Smidova et al., 2019).	---	ChIP-seq	S. coelicolor	HrdB_chipseq_Smidova_2018		
+TopA and HupA cooperation in chromosome organization during growth (Strzalka et al., 2022).	---	ChIP-seq	S. coelicolor	hupAS_chipseq_Strzalka_2024		
+Chromosome spatial rearrangement during sporulation (Szafran et al., 2021).	---	ChIP-seq	S. venezuelae	SMChupS_Szafran_2021		
