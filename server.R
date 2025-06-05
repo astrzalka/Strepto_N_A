@@ -9,7 +9,6 @@ options(shiny.maxRequestSize=30*1024^2)
 
 server <- function(input, output, session) {
   
-  data_template <- read.csv("datasets/templates_for_app.txt", sep='\t')  
 #### SWITCH FOR SPECIES ####  
   
   switch_status <- reactive({
@@ -1090,13 +1089,15 @@ server <- function(input, output, session) {
   
   output$downloadExcel <- downloadHandler(
     filename = function() {
-      return("data_template.xlsx")
+      paste0("templates_", Sys.Date(), ".xlsx")
     },
     content = function(file) {
-      # Write to Excel
-      writexl::write_xlsx(data_template, file)
-    }
+      plik_wejsciowy <- file.path("datasets/templates_for_app.xlsx")
+      file.copy(plik_wejsciowy, file)
+    },
+    contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
   )
+  
   
   
   

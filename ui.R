@@ -103,7 +103,7 @@ ui <- fluidPage(
                                                             selectize = TRUE),
                                                 conditionalPanel(condition = 'input.rna_select_3 != "no data selected"',
                                                                  uiOutput('comparison_3')
-                                                )),
+                                                ), full_screen = TRUE),
                                                 card(card_header("ChIP-seq Plot Data"),
                                                 selectInput('chip_select', 
                                                             label = NULL,  
@@ -112,7 +112,7 @@ ui <- fluidPage(
                                                             selectize = TRUE),
                                                 conditionalPanel(condition = 'input.chip_select != "no data selected"',
                                                                  uiOutput('comparison_chip')
-                                                ))
+                                                ), full_screen = TRUE)
                                 ),
                                 accordion_panel("Plot settings",
                                                 h4("LogFC Filtering"),

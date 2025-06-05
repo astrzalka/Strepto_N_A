@@ -1,10 +1,10 @@
-RNA_SEQ	gene	logFC	FDR	add_variable	?	?	ChIP-seq	chrom	chromStart	chromEnd	name	?	?	RNA_seq	gene	48hlogFC	58hlogFC	64hlogFC	48hFDR	58hFDR	64hFDR
-template	SCO0001	0	1	variable_1	?	?	template	chromosome1	1	100	variable_1	?	?	noformat	SCO0033	0.12	0.12	0.12	2,00E-01	2,00E-01	2,00E-01
-RNA_SEQ	SCO0005	0	1	variable_1	?	?	ChIP-seq	chromosome1	101	200	variable_1	?	?	template	SCO0044	0.59	0.59	0.59	1,00E-02	1,00E-02	1,00E-02
-template	SCO0003	0	1	variable_1	?	?	template	chromosome1	201	300	variable_1	?	?	RNA_seq	SCO0055	0.62	0.62	0.62	3,00E-02	3,00E-02	3,00E-02
-RNA_SEQ	SCO0003	0	1	variable_2	?	?	ChIP-seq	chromosome1	301	400	variable_1	?	?	noformat	SCO0058	0.28	0.28	0.28	3,00E-09	3,00E-09	3,00E-09
-template	SCO0005	0	1	variable_2	?	?	template	chromosome1	1	100	variable_2	?	?	template	SCO0064	0.45	0.45	0.45	2,00E-04	2,00E-04	2,00E-04
-RNA_SEQ	SCO0001	0	1	variable_2	?	?	ChIP-seq	chromosome1	101	200	variable_2	?	?	RNA_seq	SCO0065	62.29	62.29	62.29	1,00E-09	1,00E-09	1,00E-09
-template	SCO0004	0	1	variable_2	?	?	template	chromosome1	201	300	variable_2	?	?	noformat	SCO0066	62.35	62.35	62.35	9,00E-10	9,00E-10	9,00E-10
-RNA_SEQ	SCO0003	0	1	variable_3	?	?	ChIP-seq	chromosome1	301	400	variable_2	?	?	template	SCO0067	201.57	201.57	201.57	1,00E-13	1,00E-13	1,00E-13
-template	SCO0005	0	1	variable_3	?	?	template	chromosome1	401	500	variable_2	?	?	template	SCO0068	1.00	1.00	1.00	1,00E+00	1,00E+00	1,00E+00
+gene	logFC	FDR	add_variable																		
+SCO0001	0	1	variable_1																		
+SCO0005	0	1	variable_1																		
+SCO0003	0	1	variable_1																		
+SCO0003	0	1	variable_2																		
+SCO0005	0	1	variable_2																		
+SCO0001	0	1	variable_2																		
+SCO0004	0	1	variable_2																		
+SCO0003	0	1	variable_3																		
+SCO0005	0	1	variable_3																		

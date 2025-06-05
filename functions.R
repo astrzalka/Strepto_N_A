@@ -239,3 +239,5 @@ text_help_info_navigation <- HTML('
 
   </div>
 ')
+
+

@@ -1,4 +1,4 @@
-chrom	chromStart	chromEND	name
+chrom	chromStart	chromEnd	name
 Chromosome	21280	21618	coding_genes
 Chromosome	31106	31469	coding_genes
 Chromosome	31106	31469	coding_genes
