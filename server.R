@@ -699,6 +699,20 @@ server <- function(input, output, session) {
     return(table_data1)
   })
   
+  tableInput_chip_nofilter <- reactive({
+    
+    req(changes_applied())
+    
+    table_data1 <- dataselection_chipseq_before_LHfilter()
+    return(table_data1)
+  })
+  output$chip_table_nofilter <- DT::renderDT({
+    
+    req(changes_applied())
+    
+    table_data1 <- tableInput_chip_nofilter()
+    return(table_data1)
+  })
   
   ##inputpackages
   tableInput_packages <- reactive({
