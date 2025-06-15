@@ -28,7 +28,7 @@ text_content1 <- text_help_info_navigation
 text_content2 <- HTML('<div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;"><h2>Contact to authors:</h2></div>
     <ul>
       <li>Marek Skrzynski - marekskrzynski3@gmail.com</li>
-      <li>dr Agnieszka Strzalka - the.larch19@gmail.com</li>
+      <li>dr Agnieszka Strzalka - agnieszka.strzalka@uwr.edu.pl</li>
       <li>Link to the app GitHub repository: https://github.com/Majusz1320/Praca_magisterska_Marek_Skrzynski</li>
     </ul>')
 
