@@ -1861,4 +1861,54 @@ martyna$add_variable <- gsub("M145vsMGM14", "MGM14vsM145", martyna$add_variable)
 write.csv(martyna, "final_data/RNAseq_Martyna.csv", row.names = FALSE)
 
 ```
+```{r}
+
+create_empty_rnaseq_df <-   data.frame(
+    gene = NA_character_,
+    logFC = NA_real_,
+    FDR = NA_real_,
+    add_variable = NA_character_,
+    start = NA_integer_,
+    end = NA_integer_,
+    width = NA_integer_,
+    strand = NA_character_,
+    data_name = NA_character_,
+    stringsAsFactors = FALSE
+  )
+
+```
+
+```{r}
+ chipseq_smirdova <- read.csv("final_data/data_chip_seq/chipseq_smirdova.txt", sep = '\t')
+  write.csv(chipseq_smirdova, "final_data/data_chip_seq/chipseq_smirdova.csv", row.names = FALSE)
+
+  
+  
+```
+
+
+
+```{r}
+strzalka <- read.csv("final_data/data_chip_seq/hupAS_strzalka/data_hupA_chipseq_macs.txt", sep = ' ')
+
+strzalka$chrom <- "Chromosome"
+strzalka <- strzalka %>% select(chrom, start, end, rodzaj)
+colnames(strzalka) <- c("chrom", "chromStart", "chromEnd", "name")
+
+ write.csv(strzalka, "final_data/data_chip_seq/hupAS_strzalka_chipseq.csv", row.names = FALSE)
+
+```
+```{r}
+strzalka <- read.csv("final_data/data_chip_seq/hupAS_strzalka_chipseq.csv")
+
+
+```
+
+```{r}
+
+data_template <- read.csv("templates_for_app.txt", sep='\t')  
+
+read_xlsx("datasets/templates_for_app.xlsx")
+
+```
 

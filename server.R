@@ -9,7 +9,6 @@ options(shiny.maxRequestSize=30*1024^2)
 
 server <- function(input, output, session) {
   
-  data_template <- read.csv("datasets/templates_for_app.txt", sep='\t')  
 #### SWITCH FOR SPECIES ####  
   
   switch_status <- reactive({
@@ -700,6 +699,20 @@ server <- function(input, output, session) {
     return(table_data1)
   })
   
+  tableInput_chip_nofilter <- reactive({
+    
+    req(changes_applied())
+    
+    table_data1 <- dataselection_chipseq_before_LHfilter()
+    return(table_data1)
+  })
+  output$chip_table_nofilter <- DT::renderDT({
+    
+    req(changes_applied())
+    
+    table_data1 <- tableInput_chip_nofilter()
+    return(table_data1)
+  })
   
   ##inputpackages
   tableInput_packages <- reactive({
@@ -1090,13 +1103,15 @@ server <- function(input, output, session) {
   
   output$downloadExcel <- downloadHandler(
     filename = function() {
-      return("data_template.xlsx")
+      paste0("templates_", Sys.Date(), ".xlsx")
     },
     content = function(file) {
-      # Write to Excel
-      writexl::write_xlsx(data_template, file)
-    }
+      plik_wejsciowy <- file.path("datasets/templates_for_app.xlsx")
+      file.copy(plik_wejsciowy, file)
+    },
+    contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
   )
+  
   
   
   

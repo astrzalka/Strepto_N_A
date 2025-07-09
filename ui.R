@@ -25,7 +25,12 @@ options_app <- c("genome", "RNAplot", "CHIPplot")
 
 text_content1 <- text_help_info_navigation
 
-text_content2 <- "nothing to see here"
+text_content2 <- HTML('<div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;"><h2>Contact to authors:</h2></div>
+    <ul>
+      <li>Marek Skrzynski - marekskrzynski3@gmail.com</li>
+      <li>dr Agnieszka Strzalka - agnieszka.strzalka@uwr.edu.pl</li>
+      <li>Link to the app GitHub repository: https://github.com/Majusz1320/Praca_magisterska_Marek_Skrzynski</li>
+    </ul>')
 
 
 
@@ -103,7 +108,7 @@ ui <- fluidPage(
                                                             selectize = TRUE),
                                                 conditionalPanel(condition = 'input.rna_select_3 != "no data selected"',
                                                                  uiOutput('comparison_3')
-                                                )),
+                                                ), full_screen = TRUE),
                                                 card(card_header("ChIP-seq Plot Data"),
                                                 selectInput('chip_select', 
                                                             label = NULL,  
@@ -112,7 +117,7 @@ ui <- fluidPage(
                                                             selectize = TRUE),
                                                 conditionalPanel(condition = 'input.chip_select != "no data selected"',
                                                                  uiOutput('comparison_chip')
-                                                ))
+                                                ), full_screen = TRUE)
                                 ),
                                 accordion_panel("Plot settings",
                                                 h4("LogFC Filtering"),
@@ -157,9 +162,13 @@ ui <- fluidPage(
                                           tabPanel("RNAseq no filter",
                                                    DT::DTOutput("rna_table_nofilter")
                                           ),
-                                          tabPanel("CHIPseq in table",
+                                          tabPanel("CHIPseq on plot",
                                                    DT::DTOutput("chip_table")
-                                          ))), width = 12
+                                          ),
+                                          tabPanel("CHIPseq no filter",
+                                                   DT::DTOutput("chip_table_nofilter")
+                                          )
+                                          )), width = 12
                         )
                       )
              ),
