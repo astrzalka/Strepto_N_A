@@ -181,7 +181,7 @@ data_scoe <- c("AbrB1_Nieta_2020",  "AbrC3_rico_2014", "Aor1_Antoraz_2017",
 #### LOADING CHIP_SEQ ####
 
 chipseq_smidova_load <- function(){
-  chipseq_smirdova <- read.csv("datasets/final_data/data_chip_seq/chipseq_smirdova.csv")
+  chipseq_smirdova <- read.delim("datasets/final_data/data_chip_seq/chipseq_smirdova.txt")
   chipseq_smirdova$data_name <- "HrdB_chipseq_Smidova_2018"
   return(chipseq_smirdova)
 }
