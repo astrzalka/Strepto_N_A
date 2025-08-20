@@ -1,9 +1,9 @@
-# Strepto.N.A
+# Strep.N.A
 
 Application created as a master thesis project by Marek Skrzyński. Further updated by Agnieszka Strzałka.
 
 
-**Strepto.N.A** is an interactive Shiny application for exploring and comparing RNA-seq and ChIP-seq datasets from *Streptomyces coelicolor* and *Streptomyces venezuelae*.  
+**Strep.N.A** is an interactive Shiny application for exploring and comparing RNA-seq and ChIP-seq datasets from *Streptomyces coelicolor* and *Streptomyces venezuelae*.  
 
 ---
 
