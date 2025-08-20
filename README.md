@@ -5,6 +5,8 @@ Application created as a master thesis project by Marek Skrzyński. Further upda
 
 **Strep.N.A** is an interactive Shiny application for exploring and comparing RNA-seq and ChIP-seq datasets from *Streptomyces coelicolor* and *Streptomyces venezuelae*.  
 
+Available at: http://microbesinwroclaw.biotech.uni.wroc.pl:3838/zmm_apps/Strepto_N_A/
+
 ---
 
 ## Features
