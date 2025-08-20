@@ -1,4 +1,4 @@
-# Strept.N.A
+# Strepto.N.A
 
 Application created as a master thesis project by Marek Skrzyński. Further updated by Agnieszka Strzałka.
 
