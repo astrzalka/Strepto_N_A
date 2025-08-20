@@ -1105,6 +1105,7 @@ server <- function(input, output, session) {
         height = input$height_venn,
         units = "cm",
         dpi = input$res_venn
+        
       )
     }
   )
