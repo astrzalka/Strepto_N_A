@@ -41,7 +41,7 @@ rna_plot_create <- function(plot_data_rna, lower, higher){
     facet_wrap(~data_name, scales = 'free', ncol = 1, strip.position = "right") +
     facet_grid(data_name~., scales = 'free', space = 'free_y')+
     geom_gene_label(grow = TRUE, height = grid::unit(5, "mm")) +
-    scale_fill_distiller(palette = 'RdBu', direction = 1, limits = c(-2, 2), oob = scales::squish)+
+    scale_fill_distiller(palette = 'RdBu', direction = 1, limits = c(-3, 3), oob = scales::squish)+
     coord_cartesian(xlim = c(lower, higher)) +
     scale_x_continuous(expand = c(0,0))+
     theme_classic() +
@@ -121,4 +121,24 @@ heat_plot_create <- function(heat_data){
                          seq(-5, 5, length.out = 11),
                          RColorBrewer::brewer.pal(11, "RdBu"))) -> p_heat
   print(p_heat)
+}
+
+#### TSS PLOT CREATE ####
+
+tss_plot_create <- function(tss_data_plot, lower, higher){
+  tss_data_plot %>% ggplot(aes(x = Start_tss))+
+    geom_segment(data = tss_data_plot %>% filter(Strand == '-'), 
+                 aes(xend = Start_tss, y = 0, yend = -1), color = 'aquamarine4', size = 1)+
+    geom_segment(data = tss_data_plot %>% filter(Strand == '+'), 
+                 aes(xend = Start_tss, y = 0, yend = 1), color = 'sienna3', size = 1)+
+    theme_minimal()+
+    geom_hline(yintercept = 0)+
+    theme(axis.title = element_blank(),
+          axis.line = element_blank(),
+          axis.ticks = element_blank(),
+          axis.text = element_blank(),
+          panel.grid = element_blank())+
+    coord_cartesian(xlim = c(lower, higher), expand = FALSE) 
+    
+  
 }

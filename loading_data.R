@@ -137,6 +137,12 @@ Gbn_Du_2022_load <- function(){
   return(Gbn_Du_2022)
 }
 
+AdpA_Wolanski_2025_load <- function(){
+  AdpA_Wolanski_2025 <- read.csv("datasets/final_data/adpa_wolanski_sven.csv")
+  AdpA_Wolanski_2025$data_name <- "AdpA_Wolanski_2025"
+  return(AdpA_Wolanski_2025)
+}
+
 
 
 #### LIST OF DATA LOAD FUNCTION RNA-SEQ WITH IN-APP DATA NAMES ####
@@ -165,12 +171,13 @@ data_in_app <- list(
   BldB_Avramova_2023_sven = BldB_Avramova_2023_sven_load,
   MMC_Stratton_2022_sven = MMC_Stratton_2022_sven_load,
   ccr1_Lei_2024 = ccr1_Lei_2024_load,
-  Gbn_Du_2022 = Gbn_Du_2022_load
+  Gbn_Du_2022 = Gbn_Du_2022_load,
+  AdpA_Wolanski_2025 = AdpA_Wolanski_2025_load
 )
 
 #### LIST OF SVEN AND SCOE RNA-SEQ IN-APP DATA NAMES ####
 
-data_sven <- c("BldC_Bush_2018_sven", "BldB_Avramova_2023_sven",  "ECF42_Liu_2018_sven", "GlnR_Pullan_2011", 
+data_sven <- c('AdpA_Wolanski_2025', "BldC_Bush_2018_sven", "BldB_Avramova_2023_sven",  "ECF42_Liu_2018_sven", "GlnR_Pullan_2011", 
                 "ETOHschock_Sekurova_2022_sven", "MMC_Stratton_2022_sven")
 
 data_scoe <- c("AbrB1_Nieta_2020",  "AbrC3_rico_2014", "Aor1_Antoraz_2017", 
@@ -204,7 +211,30 @@ Gbn_chipseq_Du_2022_load <- function(){
   return(Gbn_chipseq_Du_2022)
 }
 
+whiB_chipseq_Bush_2016_load <- function(){
+  whiB_chipseq_Bush_2016 <- read.csv("datasets/final_data/data_chip_seq/whiB_bush_chipseq.csv")
+  whiB_chipseq_Bush_2016$data_name <- "WhiB_chipseq_Bush_2016"
+  return(whiB_chipseq_Bush_2016)
+}
 
+
+whiA_chipseq_Bush_2013_load <- function(){
+  whiA_chipseq_Bush_2013 <- read.csv("datasets/final_data/data_chip_seq/whiA_bush_chipseq.csv")
+  whiA_chipseq_Bush_2013$data_name <- "WhiA_chipseq_Bush_2013"
+  return(whiA_chipseq_Bush_2013)
+}
+
+AdpA_chipseq_Wolanski_2025_load <- function(){
+  AdpA_chipseq_Wolanski_2025 <- read.csv("datasets/final_data/data_chip_seq/adpa_wolanski_sven.csv")
+  AdpA_chipseq_Wolanski_2025$data_name <- "AdpA_chipseq_Wolanski_2025"
+  return(AdpA_chipseq_Wolanski_2025)
+}
+
+ParB_chipseq_Pawlikiewicz_2025_load <- function(){
+  ParB_chipseq_Pawlikiewicz_2025 <- read.csv("datasets/final_data/data_chip_seq/ParB_Pawlikiewicz_2025.csv")
+  ParB_chipseq_Pawlikiewicz_2025$data_name <- "ParB_chipseq_Pawlikiewicz_2025"
+  return(ParB_chipseq_Pawlikiewicz_2025)
+}
 
 #### LIST OF DATA LOAD FUNCTION CHIP-SEQ WITH IN-APP DATA NAMES ####
 
@@ -212,10 +242,28 @@ data_load_chipseq <- list(
   HrdB_chipseq_Smidova_2018 = chipseq_smidova_load,
   hupAS_chipseq_Strzalka_2024 = hupAS_strzalka_chipseq_load,
   SMChupS_Szafran_2021 = hupS_chipseq_szafran_load,
-  Gbn_chipseq_Du_2022 = Gbn_chipseq_Du_2022_load
+  Gbn_chipseq_Du_2022 = Gbn_chipseq_Du_2022_load,
+  WhiA_chipseq_Bush_2013 = whiA_chipseq_Bush_2013_load,
+  WhiB_chipseq_Bush_2016 = whiB_chipseq_Bush_2016_load,
+  AdpA_chipseq_Wolanski_2025 = AdpA_chipseq_Wolanski_2025_load,
+  ParB_chipseq_Pawlikiewicz_2025 = ParB_chipseq_Pawlikiewicz_2025_load
 )
+
+# data_load_chipseq_scoe <- list(
+#   HrdB_chipseq_Smidova_2018 = chipseq_smidova_load,
+#   hupAS_chipseq_Strzalka_2024 = hupAS_strzalka_chipseq_load,
+#   Gbn_chipseq_Du_2022 = Gbn_chipseq_Du_2022_load
+# )
+# 
+# data_load_chipseq_sven <- list(
+#   SMChupS_Szafran_2021 = hupS_chipseq_szafran_load,
+#   WhiA_chipseq_Bush_2013 = whiA_chipseq_Bush_2013_load,
+#   WhiB_chipseq_Bush_2016 = whiB_chipseq_Bush_2016_load
+# )
 
 #### LIST OF SVEN AND SCOE CHIP-SEQ IN-APP DATA NAMES ####
 
-data_chipseq <- c("HrdB_chipseq_Smidova_2018", "hupAS_chipseq_Strzalka_2024", "SMChupS_Szafran_2021", "Gbn_chipseq_Du_2022")
+data_chipseq_scoe <- c("HrdB_chipseq_Smidova_2018", "hupAS_chipseq_Strzalka_2024", "Gbn_chipseq_Du_2022")
+
+data_chipseq_sven <- c('WhiA_chipseq_Bush_2013', 'WhiB_chipseq_Bush_2016', 'ParB_chipseq_Pawlikiewicz_2025', 'AdpA_chipseq_Wolanski_2025', "SMChupS_Szafran_2021")
 

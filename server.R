@@ -9,7 +9,7 @@ options(shiny.maxRequestSize=30*1024^2)
 
 server <- function(input, output, session) {
   
-#### SWITCH FOR SPECIES ####  
+  #### SWITCH FOR SPECIES ####  
   
   switch_status <- reactive({
     switch_status <- input$switch_species
@@ -17,13 +17,13 @@ server <- function(input, output, session) {
   })
   output$switch_value <- reactive({
     if (switch_status() == FALSE)
-    {switch_text <- "SCOE"}
+    {switch_text <- "Streptomyces coelicolor"}
     else
-    {switch_text <- "SVEN"}
+    {switch_text <- "Streptomyces venezuelae"}
     return(switch_text)
   })
   
-#### SWITCH FOR FILE RNA SEQ FORMAT ####
+  #### SWITCH FOR FILE RNA SEQ FORMAT ####
   
   switch_status_filetype <- reactive({
     switch_status <- input$switch_filetype
@@ -203,18 +203,18 @@ server <- function(input, output, session) {
     
     if(switch_status_filetype() == FALSE){
       user_file <- user_file
-      } else {
+    } else {
       user_file <- data_noformat_formating(user_file)}
     
-   
-      # Use input$file_name directly here
-      user_file$data_name <- input$file_name
-      return(user_file)
+    
+    # Use input$file_name directly here
+    user_file$data_name <- input$file_name
+    return(user_file)
     
   })
   
   
-
+  
   #### USER DATA UPLOAD CHIPSEQ ####
   user_data_upload_chip <- reactive({
     req(changes_applied())
@@ -290,14 +290,14 @@ server <- function(input, output, session) {
   data_loaded_rna <- reactive({
     base_datasets <- if (switch_status()) {
       data_sven
-      } else {
+    } else {
       data_scoe
     }
     
     if (!is.null(input$file_name)) base_datasets <- c(base_datasets, input$file_name)
     base_datasets
-   
-})
+    
+  })
   observe({
     choices <- c("no data selected", data_loaded_rna())
     sapply(paste0("rna_select_", 1:3), function(id) {
@@ -344,7 +344,7 @@ server <- function(input, output, session) {
     do.call(rbind, current_cache[selected_datasets])
   })
   
-
+  
   output$table_test <- renderDataTable({dataselection_rnaseq_before_LHfilter()})
   
   
@@ -482,7 +482,25 @@ server <- function(input, output, session) {
     return(plot_data_genome_filter)
   })
   
+  #### Load TSS data ####
   
+  TSSdata <- reactive({
+    
+    req(changes_applied())
+    
+    if(switch_status() == FALSE)
+    {
+      tss_data <- read.table("datasets/TSS/tss_coelicolor.txt")
+    }
+    else{
+      tss_data <- read.table("datasets/TSS/tss_venezuelae.txt")
+    }
+    
+    tss_data_filter <- tss_data %>% filter(Start_tss >= changes_applied_lower(), Start_tss <= changes_applied_higher())
+    
+    return(tss_data_filter)
+    
+  })
   
   
   #### GENOMEPLOT ####
@@ -490,7 +508,7 @@ server <- function(input, output, session) {
   genomeplot <- reactive({
     
     req(changes_applied())
-
+    
     plot_data_genome <- filtergenomedata()
     plot_data_genome <- plot_data_genome %>% mutate(strand_plot = ifelse(strand == '+', 1, 0))
     plot_data_genome <- plot_data_genome %>% distinct(gene, .keep_all = TRUE)
@@ -506,8 +524,21 @@ server <- function(input, output, session) {
   })
   
   
+  #### TSSPLOT ####
   
-  
+  TSSplot <- reactive({
+    
+    req(changes_applied())
+    
+    tss_data <- TSSdata()
+    
+    #plots_code::tss_plot_create
+    
+    tss_plot <- tss_plot_create(tss_data,
+                                lower = changes_applied_lower(), 
+                                higher = changes_applied_higher())
+    
+  })
   
   
   #### RNAPLOT ####
@@ -538,14 +569,20 @@ server <- function(input, output, session) {
   #### CHIPSEQ SELECTION ####
   
   # Define available ChIP-seq datasets as a constant
-  CHIP_DATASETS <- data_chipseq
+  CHIP_DATASETS <- reactive({
+    if (input$switch_species) {
+      data_chipseq_sven
+    } else {
+      data_chipseq_scoe
+    }
+  })
   
   # Dynamic choices reactive
   available_datasets <- reactive({
     if (!is.null(input$file_name_chip)) {
-      return(c("no data selected", CHIP_DATASETS, input$file_name_chip))
+      return(c("no data selected", CHIP_DATASETS(), input$file_name_chip))
     } else {
-      return(c("no data selected", CHIP_DATASETS))
+      return(c("no data selected", CHIP_DATASETS()))
     }
   })
   
@@ -568,7 +605,7 @@ server <- function(input, output, session) {
     all_data <- list()
     
     # Load preset datasets
-    preset_datasets <- intersect(CHIP_DATASETS, selected_datasets)
+    preset_datasets <- intersect(CHIP_DATASETS(), selected_datasets)
     if (length(preset_datasets) > 0) {
       preset_data <- lapply(preset_datasets, function(dataset) {
         data_loaders[[dataset]]()
@@ -646,7 +683,7 @@ server <- function(input, output, session) {
   
   #### TABLES INPUT ####
   
-
+  
   tableInput_rna <- reactive({
     
     req(changes_applied())
@@ -717,7 +754,7 @@ server <- function(input, output, session) {
   ##inputpackages
   tableInput_packages <- reactive({
     
-   
+    
     
     table_data1 <- read.csv("datasets/packages.txt", sep = '\t')
     return(table_data1)
@@ -725,7 +762,7 @@ server <- function(input, output, session) {
   
   output$table_packages <- DT::renderDT({
     
-   
+    
     
     table_data <- tableInput_packages()
     rownames(table_data) <- NULL
@@ -744,7 +781,7 @@ server <- function(input, output, session) {
   
   output$table_data <- DT::renderDT({
     
-   
+    
     
     table_data <- tableInput_data()
     rownames(table_data) <- NULL
@@ -758,7 +795,7 @@ server <- function(input, output, session) {
   plot_all_patchwork <- reactive({
     req(changes_applied())
     
-    all_possible_choices <- c('genome', 'RNAplot', 'CHIPplot')
+    all_possible_choices <- c('genome', 'RNAplot', 'CHIPplot', 'TSSplot')
     selected_plots <- input$options
     
     plot_list <- list()
@@ -766,6 +803,12 @@ server <- function(input, output, session) {
     
     if ('genome' %in% selected_plots) {
       plot_list$genome <- genomeplot()
+      heights <- c(heights, 1)
+    }
+    
+    if ('TSSplot' %in% selected_plots) {
+      
+      plot_list$TSSplot <- TSSplot()
       heights <- c(heights, 1)
     }
     
@@ -796,6 +839,7 @@ server <- function(input, output, session) {
     p_all <- patchwork::wrap_plots(plot_list, ncol = 1, heights = heights)
     return(p_all)
   })
+  
   output$all_plots <- renderPlot({ plot_all_patchwork() })
   
   
@@ -924,7 +968,7 @@ server <- function(input, output, session) {
   filter_data_for_heatmap <- reactive({
     req(input$comparison_venn_1)
     req(input$gene_list)
-
+    
     data_rna <- dataselection_venn()
     gene_string <- input$gene_list
     gene_vector <- unlist(strsplit(gene_string, ", "))
@@ -941,9 +985,9 @@ server <- function(input, output, session) {
     
     filtered_data %>% filter(!if_all(2:ncol(filtered_data), is.na)) %>%
       pivot_longer(cols = 2:ncol(filtered_data), names_to = 'add_variable', values_to = 'logFC') -> filtered_data
-   
+    
     return(filtered_data)
-})
+  })
   
   
   filter_data_for_venn <- reactive({
@@ -1008,7 +1052,7 @@ server <- function(input, output, session) {
   output$venn_table_uncommon <- renderDataTable({data_venn_table_uncommon()})
   
   
-
+  
   
   
   #### HEATMAP PLOT####
@@ -1034,12 +1078,12 @@ server <- function(input, output, session) {
     table_data <- tableInput_heatmap()
     rownames(table_data) <- NULL
     return(table_data)
-    })
+  })
   
   
   
   
- 
+  
   #### PLOT DOWNLOAD VENN AND HEAT ####
   
   output$download_plot_venn <- downloadHandler(
@@ -1112,7 +1156,483 @@ server <- function(input, output, session) {
     contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
   )
   
+  #### Gene Inspector Tabset ####
+  
+  # Reactive logic to update gene name based on species selection
+  observeEvent(input$switch_species, {
+    if (input$switch_species) {
+      # When switch is ON (TRUE) - for example, different species
+      updateTextInput(session, "gene_name", value = "vnz_13325")  # The same gene but S. venezuelae
+    } else {
+      # When switch is OFF (FALSE) - default species
+      updateTextInput(session, "gene_name", value = "SCO2950")  # Default for S. coelicolor
+    }
+  })
+  
+  # Change value of the choose species switch, added on the gene inspector page so that the user does not have to switch between pages
+  observeEvent(input$master_switch, {
+    bslib::update_switch("switch_species", value = input$master_switch, session = session)
+  })
+  # bidirectional control (both switches affect each other)
+  observeEvent(input$switch_species, {
+    bslib::update_switch("master_switch", value = input$switch_species, session = session)
+  })
+  
+  #### Load RNA-seq data ####
+  
+  load_all_rnaseq_data <- reactive({
+    # Get the appropriate dataset list based on switch status
+    if (switch_status()) {
+      # Venezuelae datasets
+      dataset_names <- data_sven
+    } else {
+      # Coelicolor datasets
+      dataset_names <- data_scoe
+    }
+    
+    # Load all datasets for the selected organism
+    loaded_data_list <- list()
+    
+    for (dataset_name in dataset_names) {
+      if (dataset_name %in% names(data_in_app)) {
+        # Load the dataset using the corresponding loader function
+        loaded_data_list[[dataset_name]] <- data_in_app[[dataset_name]]()
+      }
+    }
+    
+    # Combine all loaded datasets into one data frame
+    if (length(loaded_data_list) > 0) {
+      combined_data <- do.call(rbind, loaded_data_list)
+      return(combined_data)
+    } else {
+      return(NULL)
+    }
+  })
+  
+  #### Plot RNA-seq data ####
+  
+  output$rna_plot <- renderPlot({
+    
+    rnaseq_data <- load_all_rnaseq_data()
+    
+    rnaseq_data %>% dplyr::filter(gene == input$gene_name, FDR <= 0.05, abs(logFC) > input$logFC) %>%
+      mutate(direction = ifelse(logFC > 0, 'up', 'down'))->
+      rnaseq_data_filtered
+    
+    rnaseq_data_filtered %>% ggplot(aes(x = logFC, y = add_variable))+
+      geom_segment(aes(xend = 0, yend = add_variable, color = direction), linewidth = 1.5)+
+      geom_point(size = 3)+
+      scale_color_brewer(palette = 'Set1', guide = NULL)+
+      theme_classic()+
+      facet_grid(data_name~., scales = 'free_y', space = 'free_y')+
+      ylab('Comparison')+
+      theme(text = element_text(size = 16))
+    
+  })
+  
+  output$rna_data <- renderDT({
+    rnaseq_data <- load_all_rnaseq_data()
+    
+    rnaseq_data %>% dplyr::filter(gene == input$gene_name, FDR <= 0.05, abs(logFC) > input$logFC) %>%
+      mutate(direction = ifelse(logFC > 0, 'up', 'down'))->
+      rnaseq_data_filtered
+    return(rnaseq_data_filtered)
+  })
+  
+  #### Description panel ####
+  
+  load_all_description <- reactive({
+    # Get the appropriate dataset list based on switch status
+    if (switch_status()) {
+      # Venezuelae datasets
+      genes_table <- read.table('datasets/sven_genes_table.txt')
+    } else {
+      # Coelicolor datasets
+      genes_table <- read.table('datasets/scoeli_genes_table.txt')
+    }
+    return(genes_table)
+  })
+  
+  # scoeli_genes_table <- read.table('datasets/scoeli_genes_table.txt')
+  # Function to get gene information
+  get_gene_info <- reactive({
+    # Get the gene data
+    scoeli_genes_table <- load_all_description()
+    
+    gene_id <- trimws(input$gene_name)
+    
+    # Find the gene in the table
+    gene_data <- scoeli_genes_table[scoeli_genes_table$gene == gene_id, ]
+    
+    if (nrow(gene_data) == 0) {
+      return(list(
+        found = FALSE,
+        message = paste("Gene", gene_id, "not found in database.")
+      ))
+    } else {
+      return(list(
+        found = TRUE,
+        data = gene_data
+      ))
+    }
+  })
+  
+  # Render gene description in a more compact format
+  output$gene_description <- renderUI({
+    gene_info <- get_gene_info()
+    
+    if (!gene_info$found) {
+      return(
+        div(
+          class = "alert alert-warning",
+          icon("exclamation-triangle"),
+          gene_info$message
+        )
+      )
+    }
+    
+    gene_data <- gene_info$data
+    
+    # Create a more compact layout with columns
+    div(
+      class = "container-fluid p-0",
+      
+      # Title row
+      div(
+        class = "row mb-2",
+        div(
+          class = "col-12",
+          h5(
+            span(gene_data$gene, style = "color: #28a745; font-weight: bold;"),
+            " - ",
+            span(gene_data$product, style = "font-style: italic; font-size: 0.9em;")
+          )
+        )
+      ),
+      
+      # Info rows in 2 columns
+      div(
+        class = "row",
+        
+        # Column 1
+        div(
+          class = "col-6",
+          div(
+            class = "mb-1",
+            tags$b("Alt. names: "),
+            tags$span(style = "font-size: 0.85em;", gene_data$gene_names)
+          ),
+          div(
+            class = "mb-1",
+            tags$b("Position: "),
+            tags$span(style = "font-size: 0.85em;",
+                      paste(formatC(gene_data$start, big.mark=","), "-",
+                            formatC(gene_data$end, big.mark=",")))
+          ),
+          div(
+            class = "mb-1",
+            tags$b("Strand: "), gene_data$strand,
+            tags$span(style = "margin-left: 10px;"),
+            tags$b("Length: "),
+            paste(formatC(gene_data$end - gene_data$start + 1, big.mark=","), "bp")
+          )
+        ),
+        
+        # Column 2
+        div(
+          class = "col-6",
+          div(
+            class = "mb-1",
+            tags$b("Protein: "),
+            tags$span(paste(gene_data$protein_length, "aa")),
+            tags$span(style = "margin-left: 10px;"),
+            tags$b("UniProt: "),
+            tags$a(href = paste0("https://www.uniprot.org/uniprot/", gene_data$Entry),
+                   target = "_blank", gene_data$Entry)
+          ),
+          div(
+            class = "mb-1 text-truncate",
+            style = "max-width: 100%;",
+            tags$b("Protein: "),
+            tags$span(
+              style = "font-size: 0.85em; font-style: italic;",
+              title = gene_data$protein_name,
+              gene_data$protein_name
+            )
+          ),
+          div(
+            style = "font-size: 0.85em; overflow: visible; white-space: normal;",
+            title = gene_data$note,
+            tags$b("Note: "),
+            gene_data$note
+          )
+        )
+      )
+    )
+  })
+  
+#### Normalized expression over time plot ####
   
   
+  # Create expression time plot in the bottom left card
+  output$expressionTimePlot <- renderPlot({
+    
+    if (input$switch_species) {
+      # Species switch is ON - load S. venezuelae datasets
+      expression_data <- read.table('datasets/sven_rna_normalized.txt')
+      
+      # add genes for comparison
+      if(!is.null(input$compare_genes)){
+        add_genes <- input$compare_genes
+        add_genes <- trimws(unlist(strsplit(add_genes, split = ',')))
+      } else {
+        add_genes <- NULL
+      }
+      
+      ggplot(expression_data %>% filter(gene %in% c(input$gene_name, add_genes)), 
+             aes(x = hours2, y = expression, color = gene, shape = factor(experiment))) +
+        geom_line(size = 1, linetype = 2) +
+        geom_point(size = 3) +
+        labs(
+          #title = paste("Normalized expression of", long_data$gene),
+          x = "Growth Time (hours)",
+          y = "Expression Level"
+        ) +
+        theme_minimal() +
+        theme(
+          plot.title = element_text(face = "bold"),
+          axis.title = element_text(face = "bold"),
+          axis.title.x = element_text(size = 14),
+          axis.title.y = element_text(size = 14),
+          axis.text = element_text(size = 14),
+          panel.grid.minor = element_blank(),
+          legend.text = element_text(size = 14),
+          legend.title = element_text(size = 14),
+          legend.position = 'bottom'
+        )+
+        scale_shape_discrete(name = 'exp')
+      
+    } else {
+      # Species switch is OFF - load S. coelicolor datasets  
+      expression_data <- read.table('datasets/yeong_2016_rna.txt')
+      # Reshape the data for plotting
+      long_data <- tidyr::pivot_longer(
+        expression_data,
+        cols = c("M", "T", "L", "S"),
+        names_to = "time_point",
+        values_to = "expression"
+      )
+      # add genes for comparison
+      if(!is.null(input$compare_genes)){
+        add_genes <- input$compare_genes
+        add_genes <- trimws(unlist(strsplit(add_genes, split = ',')))
+        long_data <- filter(long_data, gene %in% c(input$gene_name, add_genes))
+      } else {
+        # filter
+        long_data <- filter(long_data, gene == input$gene_name)
+      }
+      
+      # Add hours information
+      long_data$hours <- factor(
+        long_data$time_point,
+        levels = c("M", "T", "L", "S"),
+        labels = c("14", "18", "22", "36")
+      )
+      long_data$hours2 <- as.numeric(as.character(long_data$hours))
+      
+      
+      # Create the line plot
+      ggplot(long_data, aes(x = hours2, y = expression, color = gene)) +
+        geom_line(size = 1, linetype = 2) +
+        geom_point(size = 3) +
+        labs(
+          title = paste("Normalized expression of", long_data$gene),
+          x = "Growth Time (hours)",
+          y = "Expression Level"
+        ) +
+        theme_minimal() +
+        theme(
+          plot.title = element_text(face = "bold"),
+          axis.title = element_text(face = "bold"),
+          axis.title.x = element_text(size = 14),
+          axis.title.y = element_text(size = 14),
+          axis.text = element_text(size = 14),
+          panel.grid.minor = element_blank(),
+          legend.text = element_text(size = 14),
+          legend.title = element_text(size = 14),
+          legend.position = 'bottom'
+        )
+    }
+    
+  })
   
+#### 16S RNA Tree plot ####
+  
+  tree_rna <- readRDS('datasets/tree_rna_small.rds')
+  
+  for(i in 1:length(tree_rna$tip.label)){
+    tree_rna$tip.label[i] <- paste(strsplit(tree_rna$tip.label[i], "\\s+")[[1]][1:2], collapse = " ")
+  }
+  
+  output$rna_tree_plot <- renderPlot({
+    
+    tabela_gene <- read.delim(paste0('datasets/wyniki_homology_search/', input$gene_name, '_homologysearch_full.txt'))
+    tabela_gene %>% dplyr::group_by(organism) %>%
+      dplyr::filter(Score >= input$score, length >= input$length_min, length <= input$length_max) %>%
+      dplyr::mutate(n = dplyr::n(),
+                    label = paste(strsplit(organism, "\\s+")[[1]][1:2], collapse = " ")) %>%
+      select(label, n) %>%
+      distinct() -> tabela_gene
+    
+    tree_rna %>% tidytree::full_join(tabela_gene) -> tree_rna_full
+    
+    ggtree::ggtree(tree_rna_full)+
+      ggtree::geom_tiplab(size=4)+
+      ggtree::geom_tree(aes(color=n), size = 1.5)+
+      xlim(NA, 1.5)+
+      scale_color_viridis_c()+
+      theme(legend.position = 'bottom')
+  })
+  
+  output$tree_data <- renderDT({
+    tabela_gene <- read.delim(paste0('datasets/wyniki_homology_search/', input$gene_name, '_homologysearch_full.txt'))
+    tabela_gene %>% dplyr::group_by(organism) %>%
+      dplyr::filter(Score >= input$score, length >= input$length_min, length <= input$length_max) %>%
+      dplyr::mutate(n = dplyr::n(),
+                    label = paste(strsplit(organism, "\\s+")[[1]][1:2], collapse = " "),
+                    Score = round(Score, 1),
+                    identity = round(identity2, 2),
+                    uniprot_accs = sub("^[^|]+\\|([^|]+)\\|.*", "\\1", subject_name)) %>%
+      ungroup() %>%
+      select(Organism = label, uniprot_accs, Score, identity, proteom, length, sequence)
+  })
+  
+  #### ChIP-seq plot #####
+  
+  all_chipseq_data <- reactive({
+    # Get the appropriate dataset list based on species switch
+    if (input$switch_species) {
+      # Species switch is ON - load S. venezuelae datasets
+      dataset_loaders <- data_load_chipseq
+      dataset_names <- data_chipseq_sven
+    } else {
+      # Species switch is OFF - load S. coelicolor datasets  
+      dataset_loaders <- data_load_chipseq
+      dataset_names <- data_chipseq_scoe
+    }
+    
+    # Load all datasets for the selected species
+    all_data <- list()
+    
+    for (dataset_name in dataset_names) {
+      tryCatch({
+        # Load the dataset using the appropriate loader function
+        dataset <- dataset_loaders[[dataset_name]]()
+        
+        # Add dataset name as a column for identification
+        if (!is.null(dataset) && nrow(dataset) > 0) {
+          dataset$dataset_source <- dataset_name
+          all_data[[dataset_name]] <- dataset
+        }
+      }, error = function(e) {
+        cat("Error loading dataset", dataset_name, ":", conditionMessage(e), "\n")
+      })
+    }
+    
+    # Combine all datasets into a single data.frame
+    if (length(all_data) > 0) {
+      combined_data <- do.call(rbind, all_data)
+      return(combined_data)
+    } else {
+      return(NULL)
+    }
+  })
+  
+  genes_chipseq_plot <- reactive({
+    # Get the appropriate dataset list based on species switch
+    if (input$switch_species) {
+      # Species switch is ON - load S. venezuelae datasets
+      genes <- read.table('datasets/sven_genes_vnz.txt')
+      
+    } else {
+      # Species switch is OFF - load S. coelicolor datasets  
+      genes <- read.table('datasets/genes_scoelicolor.txt')
+      
+    }
+    
+    return(genes)
+  })
+  
+  # Dynamic UI for ChIP-seq dataset selection
+  output$chip_data_inspector_ui <- renderUI({
+    chip_data <- all_chipseq_data()
+    
+    if (is.null(chip_data)) {
+      # Return disabled selectInput when no data available
+      selectInput(
+        'chip_data_inspector',
+        'Choose ChIP-seq datasets',
+        choices = c("No data available"),
+        selected = NULL,
+        multiple = TRUE
+      )
+    } else {
+      # Create id column and get unique values
+      chip_data_with_id <- chip_data %>% 
+        mutate(id = paste(name, data_name, sep = '.'))
+      
+      unique_ids <- unique(chip_data_with_id$id)
+      
+      selectInput(
+        'chip_data_inspector',
+        'Choose ChIP-seq datasets',
+        choices = unique_ids,
+        selected = if (length(unique_ids) > 0) unique_ids[1] else NULL,
+        multiple = TRUE
+      )
+    }
+  })
+  
+  # the ui will generate even if the accordion panel is hidden from the user
+  outputOptions(output, "chip_data_inspector_ui", suspendWhenHidden = FALSE)
+  
+  
+  chip_plot <- reactive({
+    
+    # chip_data <- read.table('datasets/scoe_chip.txt') %>% mutate(id = paste(name, data_name, sep = '.'))
+    chip_data <- all_chipseq_data()
+    chip_data %>% mutate(id = paste(name, data_name, sep = '.')) -> chip_data
+    
+    scoelicolor_genes <- genes_chipseq_plot()
+    
+    gene <- scoelicolor_genes %>% filter(gene == input$gene_name)
+    min <- gene$start - (input$flank + 1000)
+    max <- gene$end + input$flank + 1000
+    gene_plot <-  scoelicolor_genes %>% filter(start >= min, end <= max)
+    
+    chip_filtered <- chip_data %>% filter(chromStart >= gene$start - input$flank - 1000, chromEnd <= gene$end+input$flank + 1000) %>%
+      filter(id %in% input$chip_data_inspector)
+    
+    ggplot(gene_plot, aes(x = start, xend = end, y = 0, yend = 0))+
+      geom_segment(size = 3)+
+      theme_classic()+
+      coord_cartesian(xlim = c(gene$start-input$flank, gene$end+input$flank),
+                      ylim = c(-0.9, 0.4))+
+      theme(axis.line.y = element_blank(),
+            axis.text.y = element_blank(),
+            axis.ticks.y = element_blank(),
+            axis.title.y = element_blank(),
+            text = element_text(size = 14),
+            legend.position = 'bottom',
+            legend.direction = 'vertical')+
+      geom_segment(data = chip_filtered, aes(x = chromStart, y = -0.5, xend = chromEnd, yend = -0.5, color = id),
+                   size = 3, alpha = 0.5)+
+      geom_text(aes(x = (start+end)/2, y = -0.1, label = gene))+
+      scale_color_discrete(name = 'ChIP-seq')+
+      xlab('genomic position')
+    
+  })
+  
+  output$chipseq_plot <- renderPlot({chip_plot()})
+
 }

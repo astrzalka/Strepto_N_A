@@ -21,7 +21,7 @@ source('plots_code.R')
 #### UI ####
 
 
-options_app <- c("genome", "RNAplot", "CHIPplot")
+options_app <- c("genome", "RNAplot", "CHIPplot", 'TSSplot')
 
 text_content1 <- text_help_info_navigation
 
@@ -74,50 +74,50 @@ ui <- fluidPage(
                                 ),
                                 accordion_panel("Selection",
                                                 card(
-                                                bslib::input_switch("switch_species", label = HTML("Select <em>Streptomyces</em> species")),
-                                                verbatimTextOutput("switch_value"),
-                                                selectInput('options', 'Show/hide visualizations', options_app,
-                                                            multiple=TRUE, selectize=TRUE,
-                                                            selected = c('genome', 'RNAplot')),
-                                                selectizeInput("select_gene", 
-                                                               label = "Choose gene from list", 
-                                                               choices = "all",
-                                                               selected = "all",
-                                                               options = list(maxOptions = 10000))),
+                                                  bslib::input_switch("switch_species", label = HTML("Select <em>Streptomyces</em> species")),
+                                                  verbatimTextOutput("switch_value"),
+                                                  selectInput('options', 'Show/hide visualizations', options_app,
+                                                              multiple=TRUE, selectize=TRUE,
+                                                              selected = c('genome', 'RNAplot')),
+                                                  selectizeInput("select_gene", 
+                                                                 label = "Choose gene from list", 
+                                                                 choices = "all",
+                                                                 selected = "all",
+                                                                 options = list(maxOptions = 10000))),
                                                 card(card_header('RNA-seq Plot Data'),
-                                                selectInput('rna_select_1', 
-                                                            label = NULL,
-                                                            selected = "no data selected",
-                                                            choices = c("no data selected"),
-                                                            selectize = TRUE),
-                                                conditionalPanel(condition = 'input.rna_select_1 != "no data selected"',
-                                                                 uiOutput('comparison_1')
-                                                ),
-                                                selectInput('rna_select_2', 
-                                                            label = ' ',  
-                                                            selected = "no data selected",
-                                                            choices = c("no data selected"),
-                                                            selectize = TRUE),
-                                                conditionalPanel(condition = 'input.rna_select_2 != "no data selected"',
-                                                                 uiOutput('comparison_2')
-                                                ),
-                                                selectInput('rna_select_3', 
-                                                            label = ' ',  
-                                                            selected = "no data selected",
-                                                            choices = c("no data selected"),
-                                                            selectize = TRUE),
-                                                conditionalPanel(condition = 'input.rna_select_3 != "no data selected"',
-                                                                 uiOutput('comparison_3')
-                                                ), full_screen = TRUE),
+                                                     selectInput('rna_select_1', 
+                                                                 label = NULL,
+                                                                 selected = "no data selected",
+                                                                 choices = c("no data selected"),
+                                                                 selectize = TRUE),
+                                                     conditionalPanel(condition = 'input.rna_select_1 != "no data selected"',
+                                                                      uiOutput('comparison_1')
+                                                     ),
+                                                     selectInput('rna_select_2', 
+                                                                 label = ' ',  
+                                                                 selected = "no data selected",
+                                                                 choices = c("no data selected"),
+                                                                 selectize = TRUE),
+                                                     conditionalPanel(condition = 'input.rna_select_2 != "no data selected"',
+                                                                      uiOutput('comparison_2')
+                                                     ),
+                                                     selectInput('rna_select_3', 
+                                                                 label = ' ',  
+                                                                 selected = "no data selected",
+                                                                 choices = c("no data selected"),
+                                                                 selectize = TRUE),
+                                                     conditionalPanel(condition = 'input.rna_select_3 != "no data selected"',
+                                                                      uiOutput('comparison_3')
+                                                     ), full_screen = TRUE),
                                                 card(card_header("ChIP-seq Plot Data"),
-                                                selectInput('chip_select', 
-                                                            label = NULL,  
-                                                            selected = "no data selected",
-                                                            choices = c("no data selected"),
-                                                            selectize = TRUE),
-                                                conditionalPanel(condition = 'input.chip_select != "no data selected"',
-                                                                 uiOutput('comparison_chip')
-                                                ), full_screen = TRUE)
+                                                     selectInput('chip_select', 
+                                                                 label = NULL,  
+                                                                 selected = "no data selected",
+                                                                 choices = c("no data selected"),
+                                                                 selectize = TRUE),
+                                                     conditionalPanel(condition = 'input.chip_select != "no data selected"',
+                                                                      uiOutput('comparison_chip')
+                                                     ), full_screen = TRUE)
                                 ),
                                 accordion_panel("Plot settings",
                                                 h4("LogFC Filtering"),
@@ -135,7 +135,7 @@ ui <- fluidPage(
                                                   condition = "output.fileUploaded",
                                                   textAreaInput("file_name", "Add name for your file")
                                                 ),
-                                              
+                                                
                                                 fileInput("uploaded_file_chip", "CHIP-seq file"),
                                                 conditionalPanel(
                                                   condition = "output.fileUploaded_chip",
@@ -168,7 +168,7 @@ ui <- fluidPage(
                                           tabPanel("CHIPseq no filter",
                                                    DT::DTOutput("chip_table_nofilter")
                                           )
-                                          )), width = 12
+                              )), width = 12
                         )
                       )
              ),
@@ -178,43 +178,43 @@ ui <- fluidPage(
                           width = 500,
                           div(class = "sidebar-scroll",
                               accordion(
-                                          accordion_panel("Selection",
-                                                          card(card_header('Venn Diagram Data'),
-                                                   selectInput('venn_select_1', 
-                                                               label = NULL, 
-                                                               selected = "no data selected",
-                                                               choices = c("no data selected"),
-                                                               selectize = TRUE),
-                                                   conditionalPanel(
-                                                     condition = 'input.venn_select_1 != "no data selected"',
-                                                     uiOutput('comparison_venn_1')
-                                                   ),
-                                                   selectInput('venn_select_2', 
-                                                               label = ' ',  
-                                                               selected = "no data selected",
-                                                               choices = c("no data selected"),
-                                                               selectize = TRUE),
-                                                   conditionalPanel(
-                                                     condition = 'input.venn_select_2 != "no data selected"',
-                                                     uiOutput('comparison_venn_2')
-                                                   )),card(card_header("Heatmap gene name input"),
-                                                   textAreaInput("gene_list", NULL))
-                                          ),
-                                          accordion_panel("Venn LogFC option",
-                                                   numericInput("higher_logFC_venn", label = ("higher logFC"), value = 1.5, step = 0.1, min = 0),
-                                                   numericInput("lower_logFC_venn", label = ("lower logFC"), value = -1.5, step = 0.1, max = 0)),
-                                          accordion_panel("Plot download", 
-                                                    card("Plot Download Venn",
-                                                   downloadButton('download_plot_venn', 'Download png plot'),
-                                                   numericInput('width_venn', 'Plot width [cm]', 20, min = 5, max = 1000),
-                                                   numericInput('height_venn', 'Plot height [cm]', 14, min = 5, max = 1000),
-                                                   numericInput('res_venn', 'Resolution', 200, min = 100, max = 500)),
-                                                   card("Plot Download Heat",
-                                                   downloadButton('download_plot_heat', 'Download png plot'),
-                                                   numericInput('width_heat', 'Plot width [cm]', 20, min = 5, max = 1000),
-                                                   numericInput('height_heat', 'Plot height [cm]', 14, min = 5, max = 1000),
-                                                   numericInput('res_heat', 'Resolution', 200, min = 100, max = 500))
-                                          )
+                                accordion_panel("Selection",
+                                                card(card_header('Venn Diagram Data'),
+                                                     selectInput('venn_select_1', 
+                                                                 label = NULL, 
+                                                                 selected = "no data selected",
+                                                                 choices = c("no data selected"),
+                                                                 selectize = TRUE),
+                                                     conditionalPanel(
+                                                       condition = 'input.venn_select_1 != "no data selected"',
+                                                       uiOutput('comparison_venn_1')
+                                                     ),
+                                                     selectInput('venn_select_2', 
+                                                                 label = ' ',  
+                                                                 selected = "no data selected",
+                                                                 choices = c("no data selected"),
+                                                                 selectize = TRUE),
+                                                     conditionalPanel(
+                                                       condition = 'input.venn_select_2 != "no data selected"',
+                                                       uiOutput('comparison_venn_2')
+                                                     )),card(card_header("Heatmap gene name input"),
+                                                             textAreaInput("gene_list", NULL))
+                                ),
+                                accordion_panel("Venn LogFC option",
+                                                numericInput("higher_logFC_venn", label = ("higher logFC"), value = 1.5, step = 0.1, min = 0),
+                                                numericInput("lower_logFC_venn", label = ("lower logFC"), value = -1.5, step = 0.1, max = 0)),
+                                accordion_panel("Plot download", 
+                                                card("Plot Download Venn",
+                                                     downloadButton('download_plot_venn', 'Download png plot'),
+                                                     numericInput('width_venn', 'Plot width [cm]', 20, min = 5, max = 1000),
+                                                     numericInput('height_venn', 'Plot height [cm]', 14, min = 5, max = 1000),
+                                                     numericInput('res_venn', 'Resolution', 200, min = 100, max = 500)),
+                                                card("Plot Download Heat",
+                                                     downloadButton('download_plot_heat', 'Download png plot'),
+                                                     numericInput('width_heat', 'Plot width [cm]', 20, min = 5, max = 1000),
+                                                     numericInput('height_heat', 'Plot height [cm]', 14, min = 5, max = 1000),
+                                                     numericInput('res_heat', 'Resolution', 200, min = 100, max = 500))
+                                )
                               ))
                         ),
                         mainPanel(
@@ -229,44 +229,227 @@ ui <- fluidPage(
                         )
                       )
              ),
-             nav_panel("Help&Info",
-            navset_pill(
-            nav_panel(
-               "Usage help",
-               card(
-                 p("Click the button below to download templates for data upload:"),
-                 downloadButton("downloadExcel", "Download File"),
-                 card_header("Tips for using the app"),
-                 card_body(
-                   markdown(text_content1)
-                 )
-               )
+             nav_panel("Gene Inspector",
+                       layout_sidebar(
+                         sidebar = sidebar(
+                           width = 300,
+                           div(class = "sidebar-scroll",
+                               accordion(
+                                 accordion_panel("Gene Input",
+                                                 textInput("gene_name", "Enter gene locus name:", value = "SCO2950"),
+                                                 # Add this switch wherever you want it in your UI
+                                                 bslib::input_switch("master_switch", label = "Change species", value = FALSE)
+                                 ),
+                                 
+                                 accordion_panel("Expression Comparison",
+                                                 div(
+                                                   style = "margin-top: 10px;",
+                                                   h5("Normalized expression Comparison"),
+                                                   textInput(
+                                                     "compare_genes",
+                                                     "Add genes for comparison:",
+                                                     placeholder = "Enter gene IDs separated by commas (e.g., SCO0021,SCO1352)"
+                                                   )
+                                                 )
+                                 ),
+                                 
+                                 accordion_panel("16S RNA tree options",
+                                                 div(
+                                                   style = "margin-top: 10px;",
+                                                   numericInput(
+                                                     "score",
+                                                     "Filter genes with score higher than:",
+                                                     value = 200,
+                                                     min = 0,
+                                                     step = 10
+                                                   ),
+                                                   numericInput(
+                                                     "length_min",
+                                                     "Filter genes with length more than:",
+                                                     value = 0,
+                                                     min = 0,
+                                                     step = 10
+                                                   ),
+                                                   numericInput(
+                                                     "length_max",
+                                                     "Filter genes with length less than:",
+                                                     value = 2000,
+                                                     min = 0,
+                                                     step = 10
+                                                   )
+                                                 )
+                                 ),
+                                 
+                                 accordion_panel("RNA-seq plot options",
+                                                 div(
+                                                   style = "margin-top: 10px;",
+                                                   numericInput(
+                                                     "logFC",
+                                                     "Filter genes with logFC higher/lower than:",
+                                                     value = 0.5,
+                                                     min = 0,
+                                                     step = 0.5
+                                                   )
+                                                 )
+                                 ),
+                                 
+                                 accordion_panel("ChIP-seq plot options",
+                                                 div(
+                                                   style = "margin-top: 10px;",
+                                                   numericInput(
+                                                     "flank",
+                                                     "Change flank size:",
+                                                     value = 1000,
+                                                     min = 1000,
+                                                     step = 500
+                                                   ),
+                                                   uiOutput("chip_data_inspector_ui")
+                                                 )
+                                 )
+                               )
+                           )
+                         ),
+                         
+                         mainPanel(
+                           div(class = "main-scroll",
+                               layout_columns(
+                                 fill = TRUE,
+                                 col_widths = c(4, 4, 4),
+                                 
+                                 # Column 1: Three small cards stacked vertically
+                                 layout_column_wrap(
+                                   width = 1,
+                                   height = "100%",
+                                   
+                                   # Gene Description card
+                                   card(
+                                     height = "150px",
+                                     full_screen = TRUE,
+                                     card_header("Gene Description"),
+                                     card_body(
+                                       style = "padding: 0.75rem; overflow-y: auto;",
+                                       uiOutput("gene_description")
+                                     )
+                                   ),
+                                   
+                                   # Normalized gene expression card
+                                   card(
+                                     height = "300px",
+                                     full_screen = TRUE,
+                                     card_header("Normalized gene expression"),
+                                     card_body(
+                                       plotOutput("expressionTimePlot", height = "230px")
+                                     )
+                                   ),
+                                   
+                                   # ChIP-seq card
+                                   card(
+                                     height = "300px",
+                                     full_screen = TRUE,
+                                     card_header("ChIP-seq predicted binding sites"),
+                                     card_body(
+                                       plotOutput("chipseq_plot", height = "230px")
+                                     )
+                                   )
+                                 ),
+                                 
+                                 # Column 2: RNA-seq results (full height)
+                                 card(
+                                   height = "750px",
+                                   full_screen = TRUE,
+                                   card_header("RNA-seq results"),
+                                   card_body(
+                                     style = "padding: 0;",
+                                     tabsetPanel(
+                                       id = "rna_tabs",
+                                       tabPanel(
+                                         "Plot",
+                                         div(
+                                           style = "padding: 10px;",
+                                           plotOutput("rna_plot", height = "825px")
+                                         )
+                                       ),
+                                       tabPanel(
+                                         "Data",
+                                         div(
+                                           style = "padding: 10px; height: 750px; overflow-y: auto;",
+                                           DTOutput("rna_data")
+                                         )
+                                       )
+                                     )
+                                   )
+                                 ),
+                                 
+                                 # Column 3: 16S RNA tree (full height)
+                                 card(
+                                   height = "750px",
+                                   full_screen = TRUE,
+                                   card_header("16S RNA tree"),
+                                   card_body(
+                                     style = "padding: 0;",
+                                     tabsetPanel(
+                                       id = "tree_tabs",
+                                       tabPanel(
+                                         "Plot",
+                                         div(
+                                           style = "padding: 10px;",
+                                           plotOutput("rna_tree_plot", height = "825px")
+                                         )
+                                       ),
+                                       tabPanel(
+                                         "Data",
+                                         div(
+                                           style = "padding: 10px; height: 750px; overflow-y: auto;",
+                                           DTOutput("tree_data")
+                                         )
+                                       )
+                                     )
+                                   )
+                                 )
+                               )
+                           ),
+                           width = 12
+                         )
+                       ) 
              ),
-             
-            nav_panel(
-              "Data&packages",
-              card(
-                card_header("Packages used in app creation"),
-                card_body(
-                  DT::DTOutput("table_packages")
-                )
-              ),
-              card(
-                card_header("Publications from which data was taken"),
-                card_body(
-                  DT::DTOutput("table_data")
-                )
-              )
-            ),
-             
-             nav_panel(
-               "About",
-               card(
-                 card_header("Additional information about author"),
-                 card_body(
-                   markdown(text_content2)
-                 )
-               )
-             )))
+             nav_panel("Help&Info",
+                       navset_pill(
+                         nav_panel(
+                           "Usage help",
+                           card(
+                             p("Click the button below to download templates for data upload:"),
+                             downloadButton("downloadExcel", "Download File"),
+                             card_header("Tips for using the app"),
+                             card_body(
+                               markdown(text_content1)
+                             )
+                           )
+                         ),
+                         
+                         nav_panel(
+                           "Data&packages",
+                           card(
+                             card_header("Packages used in app creation"),
+                             card_body(
+                               DT::DTOutput("table_packages")
+                             )
+                           ),
+                           card(
+                             card_header("Publications from which data was taken"),
+                             card_body(
+                               DT::DTOutput("table_data")
+                             )
+                           )
+                         ),
+                         
+                         nav_panel(
+                           "About",
+                           card(
+                             card_header("Additional information about author"),
+                             card_body(
+                               markdown(text_content2)
+                             )
+                           )
+                         )))
   )
 )
