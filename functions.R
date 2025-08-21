@@ -143,101 +143,124 @@ load_table_data <- function(){
 }
 
 
-text_help_info_navigation <- HTML('
-  <div style="font-family: Arial, sans-serif; line-height: 1.6; padding: 10px;">
+text_help_info_navigation <- HTML('<div style="font-family: Arial, sans-serif; line-height: 1.6; padding: 10px;">
      
-     <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;"><h2>📊 RNA-seq & ChIP-seq visualization</h2></div>
-    <ul>
-      <li>This page allows you to visualize and explore genomic data in various plot types (genome, RNA-seq, microarrays, ChIP-seq).</li>
-      <li>The page consists of a sidebar for selecting data and settings, and a main panel for displaying the plots.</li>
-    </ul>
-    
-    <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">🧭 Tab: Navigation</div>
-    <ul>
-      <li><strong>Left / Right arrows</strong> – shift the genome plot by 10,000 base pairs on the X-axis.</li>
-      <li><strong>Zoom in / Zoom out</strong> – zoom into or out of the displayed genome region.</li>
-      <li><strong>Minimal / Maximum value of plot</strong> – manually set the plot axis limits.</li>
-      <li><strong>Apply Changes</strong> – confirms manual axis changes and must be used to trigger reactivity.</li>
-    </ul>
-
-    <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">🧬 Tab: Selection</div>
-    <ul>
-      <li><strong>Select Streptomyces species</strong> – switch between <em>S. coelicolor</em> and <em>S. venezuelae</em>.</li>
-      <li><strong>Show/hide visualizations</strong> – choose which plot types to display (Genome, RNA-seq, Microarray, ChIP-seq).</li>
-      <li><strong>Choose gene from list</strong> – zoom to the selected gene on the genome.</li>
-      <li><strong>RNA-seq Plot Data</strong> – choose up to 3 RNA-seq datasets.</li>
-      <li><strong>ChIP-seq Plot Data</strong> – choose one ChIP-seq dataset.</li>
-      <li><strong>Choose comparison for analysis</strong> – select type of comparison (e.g., strain, timepoint, conditions).</li>
-    </ul>
-
-    <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">📊 Tab: Plot settings</div>
-    <ul>
-      <li><strong>LogFC Filtering</strong> – filter plot based on lower/higher log fold change values.</li>
-      <li><strong>FDR Filtering</strong> – show only data with FDR ≤ 0.05.</li>
-    </ul>
-
-    <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">⬆️ Tab: Upload data</div>
-    <ul>
-      <li><strong>Browse… / drag & drop file</strong> – upload data file from your computer.</li>
-      <li><strong>Is RNA-seq file in app format? (Yes/No)</strong> – indicate if the format matches app structure.</li>
-      <li><strong>Custom file name</strong> – assign a name that will appear in plot selectors.</li>
-    </ul>
-
-    <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">⬇️ Tab: Plot download</div>
-    <ul>
-      <li><strong>Download png plot</strong> – export plot as a PNG image.</li>
-      <li><strong>Resolution and size settings</strong> – optionally adjust width, height, and DPI before download.</li>
-    </ul>
-
-    <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">🧾 Additional: Data tables under plots</div>
-    <ul>
-      <li><strong>RNAseq on plot</strong> – genes visible on the RNA-seq plot.</li>
-      <li><strong>RNAseq no filter</strong> – full RNA-seq dataset (unfiltered).</li>
-      <li><strong>ChIPseq in table</strong> – genes shown on the ChIP-seq plot.</li>
-      <li><strong>Search:</strong> – search bar to filter table contents.</li>
-    </ul>
-
+  <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">
+    <h2>📊 RNA-seq & ChIP-seq visualization</h2>
   </div>
+  <ul>
+    <li>This page allows you to visualize and explore genomic data in various plot types (genome, RNA-seq, microarrays, ChIP-seq).</li>
+    <li>The page consists of a sidebar for selecting data and settings, and a main panel for displaying the plots.</li>
+  </ul>
+  
+  <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">🧭 Tab: Navigation</div>
+  <ul>
+    <li><strong>Left / Right arrows</strong> – shift the genome plot by 10,000 base pairs on the X-axis.</li>
+    <li><strong>Zoom in / Zoom out</strong> – zoom into or out of the displayed genome region.</li>
+    <li><strong>Minimal / Maximum value of plot</strong> – manually set the plot axis limits.</li>
+    <li><strong>Apply Changes</strong> – confirms manual axis changes and must be used to trigger reactivity.</li>
+  </ul>
 
-  <div style="font-family: Arial, sans-serif; line-height: 1.6; padding: 10px;">
-    
-    <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">📊 Comparison of data</div>
-    <ul>
-      <li>This page allows comparing datasets visually via Venn diagrams and heatmaps.</li>
-      <li>Similar to the RNA-seq & ChIP-seq page, it consists of a sidebar for inputs and a main panel for plots.</li>
-    </ul>
+  <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">🧬 Tab: Selection</div>
+  <ul>
+    <li><strong>Select <em>Streptomyces</em> species</strong> – switch between <em>S. coelicolor</em> and <em>S. venezuelae</em>.</li>
+    <li><strong>Show/hide visualizations</strong> – choose which plot types to display (Genome, RNA-seq, Microarray, ChIP-seq).</li>
+    <li><strong>Choose gene from list</strong> – zoom to the selected gene on the genome.</li>
+    <li><strong>RNA-seq Plot Data</strong> – choose up to 3 RNA-seq datasets.</li>
+    <li><strong>ChIP-seq Plot Data</strong> – choose one ChIP-seq dataset.</li>
+    <li><strong>Choose comparison for analysis</strong> – select type of comparison (e.g., strain, timepoint, conditions).</li>
+  </ul>
 
-    <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">🧬 Tab: Selection</div>
-    <ul>
-      <li><strong>Venn Diagram Data</strong> – choose up to 4 comparisons from RNA-seq or microarray datasets (including user uploads) for the Venn diagram and heatmap.</li>
-      <li><strong>Heatmap Gene Name Input</strong> – type gene names (comma-separated) to filter and display them in the heatmap, e.g., SCO6276, SCO6277.</li>
-    </ul>
+  <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">📊 Tab: Plot settings</div>
+  <ul>
+    <li><strong>LogFC Filtering</strong> – filter plot based on lower/higher log fold change values.</li>
+    <li><strong>FDR Filtering</strong> – show only data with FDR ≤ 0.05.</li>
+  </ul>
 
-    <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">🔧 Tab: Venn LogFC option</div>
-    <ul>
-      <li>Allows setting upper and lower logFC thresholds for Venn diagram filtering.</li>
-      <li>Does not affect the Heatmap.</li>
-      <li>Only comparisons with logFC outside the set range are shown (default: -1.5 to 1.5).</li>
-      <li>FDR is always ≤ 0.05 by default – cannot be changed.</li>
-    </ul>
+  <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">⬆️ Tab: Upload data</div>
+  <ul>
+    <li><strong>Browse… / drag & drop file</strong> – upload data file from your computer.</li>
+    <li><strong>Is RNA-seq file in app format? (Yes/No)</strong> – indicate if the format matches app structure.</li>
+    <li><strong>Custom file name</strong> – assign a name that will appear in plot selectors.</li>
+  </ul>
 
-    <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">⬇️ Tab: Plot download</div>
-    <ul>
-      <li><strong>Plot Download Venn</strong> – download the Venn diagram as a PNG file.</li>
-      <li><strong>Plot Download Heat</strong> – download the heatmap as a PNG file.</li>
-    </ul>
+  <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">⬇️ Tab: Plot download</div>
+  <ul>
+    <li><strong>Download png plot</strong> – export plot as a PNG image.</li>
+    <li><strong>Resolution and size settings</strong> – optionally adjust width, height, and DPI before download.</li>
+  </ul>
 
-    <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">📌 Plot behavior and logic</div>
-    <ul>
-      <li>Venn diagram supports max. 4 comparisons – if more are selected, an "UpSet" plot is shown instead.</li>
-      <li>Below the Venn diagram, genes from shared or unique subsets are listed in tables.</li>
-      <li>These gene lists can be copied into the Heatmap gene input field.</li>
-      <li>Heatmap shows only genes from selected comparisons, filtered by FDR ≤ 0.05 and the typed gene list.</li>
-      <li>Gray cells in the heatmap indicate missing values for selected genes.</li>
-      <li>Clustering: similar genes and comparisons are grouped using dendrograms (left for genes, top for comparisons).</li>
-    </ul>
+  <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">🧾 Additional: Data tables under plots</div>
+  <ul>
+    <li><strong>RNAseq on plot</strong> – genes visible on the RNA-seq plot.</li>
+    <li><strong>RNAseq no filter</strong> – full RNA-seq dataset (unfiltered).</li>
+    <li><strong>ChIPseq in table</strong> – genes shown on the ChIP-seq plot.</li>
+    <li><strong>Search:</strong> – search bar to filter table contents.</li>
+  </ul>
 
-  </div>
+  <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">📊 Comparison of data</div>
+  <ul>
+    <li>This page allows comparing datasets visually via Venn diagrams and heatmaps.</li>
+    <li>Similar to the RNA-seq & ChIP-seq page, it consists of a sidebar for inputs and a main panel for plots.</li>
+  </ul>
+
+  <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">🧬 Tab: Selection</div>
+  <ul>
+    <li><strong>Venn Diagram Data</strong> – choose up to 4 comparisons from RNA-seq or microarray datasets (including user uploads) for the Venn diagram and heatmap.</li>
+    <li><strong>Heatmap Gene Name Input</strong> – type gene names (comma-separated) to filter and display them in the heatmap, e.g., SCO6276, SCO6277.</li>
+  </ul>
+
+  <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">🔧 Tab: Venn LogFC option</div>
+  <ul>
+    <li>Allows setting upper and lower logFC thresholds for Venn diagram filtering.</li>
+    <li>Does not affect the Heatmap.</li>
+    <li>Only comparisons with logFC outside the set range are shown (default: -1.5 to 1.5).</li>
+    <li>FDR is always ≤ 0.05 by default – cannot be changed.</li>
+  </ul>
+
+  <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">⬇️ Tab: Plot download</div>
+  <ul>
+    <li><strong>Plot Download Venn</strong> – download the Venn diagram as a PNG file.</li>
+    <li><strong>Plot Download Heat</strong> – download the heatmap as a PNG file.</li>
+  </ul>
+
+  <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">📌 Plot behavior and logic</div>
+  <ul>
+    <li>Venn diagram supports max. 4 comparisons – if more are selected, an "UpSet" plot is shown instead.</li>
+    <li>Below the Venn diagram, genes from shared or unique subsets are listed in tables.</li>
+    <li>These gene lists can be copied into the Heatmap gene input field.</li>
+    <li>Heatmap shows only genes from selected comparisons, filtered by FDR ≤ 0.05 and the typed gene list.</li>
+    <li>Gray cells in the heatmap indicate missing values for selected genes.</li>
+    <li>Clustering: similar genes and comparisons are grouped using dendrograms (left for genes, top for comparisons).</li>
+  </ul>
+  
+  <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">🧬 Gene Inspector</div>
+  <ul>
+    <li>The Gene Inspector tab is a dashboard-like view dedicated to exploring a single gene in detail.</li>
+    <li>It integrates RNA-seq, ChIP-seq, and homology search results, along with genbank/uniprot annotation data for each gene.</li>
+    <li>The sidebar provides controls for entering the gene locus (e.g., SCO2950), switching species and adjusting various filters.</li>
+  </ul>
+
+  <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">📖 Panels and Outputs</div>
+  <ul>
+    <li><strong>Gene Description</strong> – shows annotation data, including locus, product, protein length, UniProt links, and notes.</li>
+    <li><strong>Normalized gene expression</strong> – line plots of normalized RNA-seq expression across timepoints, when grown in liquid medium, with optional extra genes for comparison.</li>
+    <li><strong>ChIP-seq predicted binding sites</strong> – visualizes binding events around the selected gene, with adjustable flanking region size and dataset selection.</li>
+    <li><strong>RNA-seq results</strong> – offers both a expression plot and a data table of differential expression results for the chosen gene.</li>
+    <li><strong>16S RNA tree</strong> – displays a 16SRNA phylogenetic tree for representative Actinobacteria species with marked presence of selected gene, with filtering options for score and sequence length, plus a corresponding data table.</li>
+  </ul>
+
+  <div style="font-size: 1.2em; margin-top: 1em; font-weight: bold;">⚙️ Sidebar Options</div>
+  <ul>
+    <li><strong>Gene Input</strong> – enter a locus tag manually; toggle between <em>S. coelicolor</em> and <em>S. venezuelae</em>.</li>
+    <li><strong>Expression Comparison</strong> – add multiple genes to overlay their normalized expression profiles.</li>
+    <li><strong>16S RNA tree options</strong> – filter homologues by alignment score, minimum and maximum length.</li>
+    <li><strong>RNA-seq plot options</strong> – filter results by log fold change threshold.</li>
+    <li><strong>ChIP-seq plot options</strong> – adjust flanking region size and select which ChIP-seq datasets to display.</li>
+  </ul>
+
+</div>
+
 ')
 
 
